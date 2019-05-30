@@ -5,8 +5,6 @@ document.addEventListener("DOMContentLoaded", function(e){
   document.addEventListener("mousemove",
     function(e) {wb.cursorX=e.x-wb.div.offsetLeft;wb.cursorY=e.y-wb.div.offsetTop+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
 
-  document.addEventListener("mouseup",
-    function(e) {wb.cursorX=e.x-wb.div.offsetLeft;wb.cursorY=e.y-wb.div.offsetTop+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
  
 
   
