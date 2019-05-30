@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function(e){
   document.querySelector("#wavebox").append(wb.render());
 
   document.addEventListener("mousemove",
-    function(e) {wb.cursorX=e.x-wb.div.offsetLeft;wb.cursorY=e.y-120+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
+    function(e) {wb.cursorX=e.x-10-wb.div.offsetLeft;wb.cursorY=e.y-130+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
 
  
 
