@@ -8,7 +8,13 @@ document.addEventListener("DOMContentLoaded", function(e){
    document.addEventListener("touchmove",
     function(e) {wb.cursorX=e.changedTouches[0].screenX-10-wb.div.offsetLeft;wb.cursorY=e.changedTouches[0].screenY-130+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
 
- 
+    document.addEventListener("touchstart",
+    function(e) {wb.cursorX=e.changedTouches[0].screenX-10-wb.div.offsetLeft;wb.cursorY=e.changedTouches[0].screenY-130+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
+
+    document.addEventListener("touchend",
+    function(e) {wb.cursorX=e.changedTouches[0].screenX-10-wb.div.offsetLeft;wb.cursorY=e.changedTouches[0].screenY-130+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
+
+
 
   
   setInterval( function() {
