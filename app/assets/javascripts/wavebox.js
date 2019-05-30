@@ -8,8 +8,8 @@ class WaveBox {
     this.cursorY = Math.round(width/2);
     this.div = document.createElement("div");
     this.c = 0;
-    for(let i=0; i<this.width; i++) {
-      for(let j=0; j<this.width; j++) {
+    for(var i=0; i<this.width; i++) {
+      for(var j=0; j<this.width; j++) {
         this.image.push(0.5);
         this.Dimage.push(0.0);
       }
@@ -33,10 +33,10 @@ class WaveBox {
 
   // only call render() once per instance, see update()
   render() {
-    for(let i=0; i<this.width; i++) {
-      for(let j=0; j<this.width; j++) {
-        let idx = this.idx(i,j);
-        let pxDiv = document.createElement("div");
+    for(var i=0; i<this.width; i++) {
+      for(var j=0; j<this.width; j++) {
+        var idx = this.idx(i,j);
+        var pxDiv = document.createElement("div");
         pxDiv.style = this.pxDivStyle(i,j,this.color(this.image[idx]));
         this.div.append(pxDiv);
       }
@@ -47,9 +47,9 @@ class WaveBox {
 
   // call update() as many times as desired after render() has been called
   update() {
-    for(let i=0; i<this.width; i++) {
-      for(let j=0; j<this.width; j++) {
-        let idx = this.idx(i,j);
+    for(var i=0; i<this.width; i++) {
+      for(var j=0; j<this.width; j++) {
+        var idx = this.idx(i,j);
         this.div.children[idx].style.background = this.color(this.image[idx]);
       }
     }
@@ -57,13 +57,13 @@ class WaveBox {
 
   // step forward the physical model
   stepForward() {
-    for(let i=1; i<this.width-1; i++) {
-      for(let j=1; j<this.width-1; j++) {
-        let idx = this.idx(i,j);
-        let idxU = this.idx(i-1,j);
-        let idxD = this.idx(i+1,j);
-        let idxL = this.idx(i,j-1);
-        let idxR = this.idx(i,j+1);
+    for(var i=1; i<this.width-1; i++) {
+      for(var j=1; j<this.width-1; j++) {
+        var idx = this.idx(i,j);
+        var idxU = this.idx(i-1,j);
+        var idxD = this.idx(i+1,j);
+        var idxL = this.idx(i,j-1);
+        var idxR = this.idx(i,j+1);
         this.image[idx] += this.Dimage[idx]*this.dt;
         this.Dimage[idx] += (this.image[idxU]+this.image[idxD]+
           this.image[idxL]+this.image[idxR]-4*this.image[idx]) * this.dt +
