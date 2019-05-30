@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function(e){
-  var wb = new WaveBox(100,0.01);
+  var wb = new WaveBox(75,0.01);
   document.querySelector("#wavebox").append(wb.render());
 
   document.addEventListener("mousemove",

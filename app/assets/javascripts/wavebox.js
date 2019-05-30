@@ -4,8 +4,8 @@ function WaveBox(width,dt) {
   this.image = [];
   this.Dimage = [];
   this.dt = dt;
-  this.cursorX = Math.round(6*width/2);
-  this.cursorY = Math.round(6*width/2);
+  this.cursorX = Math.round(8*width/2);
+  this.cursorY = Math.round(8*width/2);
   this.div = document.createElement("div");
   this.c = 0;
   for(var i=0; i<this.width; i++) {
@@ -16,7 +16,7 @@ function WaveBox(width,dt) {
   }
   
 
-  this.pxSz = function() { return 6; }
+  this.pxSz = function() { return 8; }
 
   this.idx = function(i,j) { 
     return this.width*i+j;
