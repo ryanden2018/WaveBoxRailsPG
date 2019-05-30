@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     function(e) {wb.cursorX=e.x-wb.div.offsetLeft;wb.cursorY=e.y-wb.div.offsetTop;});
   
   setInterval( function() {
-    for(let i=0; i<100; i++) {
+    for(var i=0; i<100; i++) {
       wb.stepForward();
       wb.c += 0.1;
     }
