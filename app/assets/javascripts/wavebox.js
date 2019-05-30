@@ -1,38 +1,38 @@
-class WaveBox {
-  constructor(width,dt) {
-    this.width = width;
-    this.image = [];
-    this.Dimage = [];
-    this.dt = dt;
-    this.cursorX = Math.round(width/2);
-    this.cursorY = Math.round(width/2);
-    this.div = document.createElement("div");
-    this.c = 0;
-    for(var i=0; i<this.width; i++) {
-      for(var j=0; j<this.width; j++) {
-        this.image.push(0.5);
-        this.Dimage.push(0.0);
-      }
+function WaveBox(width,dt) {
+  
+  this.width = width;
+  this.image = [];
+  this.Dimage = [];
+  this.dt = dt;
+  this.cursorX = Math.round(width/2);
+  this.cursorY = Math.round(width/2);
+  this.div = document.createElement("div");
+  this.c = 0;
+  for(var i=0; i<this.width; i++) {
+    for(var j=0; j<this.width; j++) {
+      this.image.push(0.5);
+      this.Dimage.push(0.0);
     }
   }
+  
 
-  pxSz() { return 6; }
+  this.pxSz = function() { return 6; }
 
-  idx(i,j) { 
+  this.idx = function(i,j) { 
     return this.width*i+j;
   }
 
-  pxDivStyle(i,j,color) {
+  this.pxDivStyle = function(i,j,color) {
     return `position:absolute;background:${color};top:${this.pxSz()*i}px;left:${this.pxSz()*j}px;width:${this.pxSz()}px;height:${this.pxSz()}px;`;
   }
 
-  color(val) {
+  this.color = function(val) {
     let normVal = Math.max(0,Math.min(255,Math.round(val*255)));
     return `rgb(${normVal},${normVal},${normVal})`;
   }
 
   // only call render() once per instance, see update()
-  render() {
+  this.render = function() {
     for(var i=0; i<this.width; i++) {
       for(var j=0; j<this.width; j++) {
         var idx = this.idx(i,j);
@@ -46,7 +46,7 @@ class WaveBox {
   }
 
   // call update() as many times as desired after render() has been called
-  update() {
+  this.update = function() {
     for(var i=0; i<this.width; i++) {
       for(var j=0; j<this.width; j++) {
         var idx = this.idx(i,j);
@@ -56,7 +56,7 @@ class WaveBox {
   }
 
   // step forward the physical model
-  stepForward() {
+  this.stepForward = function() {
     for(var i=1; i<this.width-1; i++) {
       for(var j=1; j<this.width-1; j++) {
         var idx = this.idx(i,j);
