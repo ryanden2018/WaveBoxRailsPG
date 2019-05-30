@@ -23,12 +23,12 @@ function WaveBox(width,dt) {
   }
 
   this.pxDivStyle = function(i,j,color) {
-    return `position:absolute;background:${color};top:${this.pxSz()*i}px;left:${this.pxSz()*j}px;width:${this.pxSz()}px;height:${this.pxSz()}px;`;
+    return "position:absolute;background:"+color+";top:"+(this.pxSz()*i)+"px;left:"+(this.pxSz()*j)+"px;width:"+(this.pxSz())+"px;height:"+(this.pxSz())+"px;";
   }
 
   this.color = function(val) {
-    let normVal = Math.max(0,Math.min(255,Math.round(val*255)));
-    return `rgb(${normVal},${normVal},${normVal})`;
+    let normVal = ""+Math.max(0,Math.min(255,Math.round(val*255)));
+    return "rgb("+normVal+","+normVal+","+normVal+")";
   }
 
   // only call render() once per instance, see update()
@@ -41,7 +41,7 @@ function WaveBox(width,dt) {
         this.div.append(pxDiv);
       }
     }
-    this.div.style=`position:relative;margin:auto;width:${this.pxSz()*this.width}px;`;
+    this.div.style="position:relative;margin:auto;width:"+(this.pxSz()*this.width)+"px;";
     return this.div;
   }
 
