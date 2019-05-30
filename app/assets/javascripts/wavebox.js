@@ -27,7 +27,7 @@ function WaveBox(width,dt) {
   }
 
   this.color = function(val) {
-    let normVal = ""+Math.max(0,Math.min(255,Math.round(val*255)));
+    var normVal = ""+Math.max(0,Math.min(255,Math.round(val*255)));
     return "rgb("+normVal+","+normVal+","+normVal+")";
   }
 
