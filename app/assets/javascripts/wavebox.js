@@ -18,7 +18,7 @@ class WaveBox {
 
   pxSz() { return 6; }
 
-  idx(i,j) { // 0 <= i,j < this.width
+  idx(i,j) { 
     return this.width*i+j;
   }
 

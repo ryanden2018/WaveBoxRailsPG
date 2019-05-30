@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", e=>{
+document.addEventListener("DOMContentLoaded", function(e){
   let wb = new WaveBox(100,0.01);
   document.querySelector("#wavebox").append(wb.render());
 
