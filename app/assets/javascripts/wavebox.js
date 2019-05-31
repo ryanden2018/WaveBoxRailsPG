@@ -85,7 +85,7 @@ function WaveBox(width,dt) {
     for(var i=0; i<this.width; i++) {
 
       for(var j=0; j<this.width; j++) {
-        if((i===0) || (i===this.width-1) ||(j===0) || (j===this.width-1)) {Mat.push(0.0);}
+        if((i===0) || (i===this.width-1) ||(j===0) || (j===this.width-1)) {Mat.push(0.0);Mat2.push(0.0);}
          else {
         var idx = this.idx(i,j);
         Mat.push(
@@ -101,8 +101,6 @@ function WaveBox(width,dt) {
       }
      
     }
-    console.log(this.image.length);
-    console.log(Mat.length);
 
   for(var k = 0; k < 5; k++) {
     for(var i=1; i<this.width-1; i++) {
