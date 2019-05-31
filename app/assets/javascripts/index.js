@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function(e){
   setInterval( function() {
     for(var i=0; i<30; i++) {
       wb.stepForward();
-      wb.c += 0.1;
+      wb.c += 1;
     }
   }, 10);
 
