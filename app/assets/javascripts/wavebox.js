@@ -83,10 +83,9 @@ function WaveBox(width,dt) {
     var Mat = [];
     var Mat2 = [];
     for(var i=0; i<this.width; i++) {
-      if((i===0) || (i===this.width-1)) { Mat.push(0.0); }
-      else {
+
       for(var j=0; j<this.width; j++) {
-        if((j===0) || (j===this.width-1)) {Mat.push(0.0);}
+        if((i===0) || (i===this.width-1) ||(j===0) || (j===this.width-1)) {Mat.push(0.0);}
          else {
         var idx = this.idx(i,j);
         Mat.push(
@@ -100,7 +99,7 @@ function WaveBox(width,dt) {
         this.Dimage[idx] = Mat[idx];
         }
       }
-     }
+     
     }
 
   for(var k = 0; k < 5; k++) {
