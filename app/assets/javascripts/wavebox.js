@@ -17,7 +17,7 @@ function WaveBox(width,dt) {
   }
   
 
-  this.pxSz = function() { return /*8*/ 12; }
+  this.pxSz = function() { return 12; }
 
   this.idx = function(i,j) { 
     return this.width*i+j;
@@ -69,7 +69,7 @@ function WaveBox(width,dt) {
         this.image[idx] += this.Dimage[idx]*this.dt;
         this.Dimage[idx] += 10*(this.image[idxU]+this.image[idxD]+
           this.image[idxL]+this.image[idxR]-4*this.image[idx]) * this.dt +
-           this.dt*(Math.sin(this.c/10))*Math.exp((-10)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(50*50)+Math.pow(this.pxSz()*j-this.cursorX,2)/(50*50))) -
+           this.dt*(Math.sin(this.c))*Math.exp((-10)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(50*50)+Math.pow(this.pxSz()*j-this.cursorX,2)/(50*50))) -
            this.dt*0.025*this.Dimage[idx];
       }
     }
