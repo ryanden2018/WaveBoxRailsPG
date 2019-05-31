@@ -28,7 +28,7 @@ function WaveBox(width,dt) {
   }
 
   this.color = function(val) {
-    var normVal = ""+Math.max(0,Math.min(255,Math.round(0.5*val*255)));
+    var normVal = ""+Math.max(0,Math.min(255,Math.round(val*255)));
     return "rgb("+normVal+","+normVal+","+normVal+")";
   }
 
@@ -69,7 +69,7 @@ function WaveBox(width,dt) {
         this.image[idx] += this.Dimage[idx]*this.dt;
         this.Dimage[idx] += 10*(this.image[idxU]+this.image[idxD]+
           this.image[idxL]+this.image[idxR]-4*this.image[idx]) * this.dt +
-           this.dt*(Math.sin(this.c))*Math.exp((-10)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(50*50)+Math.pow(this.pxSz()*j-this.cursorX,2)/(50*50))) -
+           this.dt*(Math.sin(this.c/10))*Math.exp((-10)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(50*50)+Math.pow(this.pxSz()*j-this.cursorX,2)/(50*50))) -
            this.dt*0.025*this.Dimage[idx];
       }
     }
