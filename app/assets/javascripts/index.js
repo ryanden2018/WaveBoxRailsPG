@@ -18,10 +18,10 @@ document.addEventListener("DOMContentLoaded", function(e){
 
   
   setInterval( function() {
+    for(var i=0; i<5; i++) {  
       wb.stepForward();
       wb.c += 0.1;
-      wb.stepForward();
-      wb.c += 0.1;
+    }
   }, 1);
 
   setInterval( function() {
