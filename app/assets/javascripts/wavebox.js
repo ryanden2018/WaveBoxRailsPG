@@ -101,6 +101,8 @@ function WaveBox(width,dt) {
       }
      
     }
+    console.log(this.image.length);
+    console.log(Mat.length);
 
   for(var k = 0; k < 5; k++) {
     for(var i=1; i<this.width-1; i++) {
