@@ -28,7 +28,7 @@ function WaveBox(width,dt) {
   }
 
   this.color = function(val) {
-    var normVal = ""+Math.max(0,Math.min(255,Math.round(0.1*val*255)));
+    var normVal = ""+Math.max(0,Math.min(255,Math.round(0.75*val*255)));
     return "rgb("+normVal+","+normVal+","+normVal+")";
   }
 
@@ -57,24 +57,6 @@ function WaveBox(width,dt) {
     }
   }
 
-  // step forward the physical model
- /* this.stepForward = function() {
-    for(var i=1; i<this.width-1; i++) {
-      for(var j=1; j<this.width-1; j++) {
-        var idx = this.idx(i,j);
-        var idxU = this.idx(i-1,j);
-        var idxD = this.idx(i+1,j);
-        var idxL = this.idx(i,j-1);
-        var idxR = this.idx(i,j+1);
-        this.image[idx] += this.Dimage[idx]*this.dt;
-        this.Dimage[idx] += (this.image[idxU]+this.image[idxD]+
-          this.image[idxL]+this.image[idxR]-4*this.image[idx]) * this.dt +
-           this.dt*(Math.sin(this.c/10))*Math.exp((-10)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(50*50)+Math.pow(this.pxSz()*j-this.cursorX,2)/(50*50))) -
-           this.dt*0.025*this.Dimage[idx];
-      }
-    }
-  } */
-
 
 
   // step forward the physical model
@@ -97,8 +79,8 @@ function WaveBox(width,dt) {
           Mat.push(this.image[idx]);
           Mat2.push(
             this.Dimage[idx]
-            +this.dt*(Math.sin(this.c/10))*Math.exp((-10)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(50*50)+Math.pow(this.pxSz()*j-this.cursorX,2)/(50*50))) -
-           this.dt*0.025*this.Dimage[idx]
+            +10*this.dt*(Math.sin(this.c/10))*Math.exp((-80)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(50*50)+Math.pow(this.pxSz()*j-this.cursorX,2)/(50*50))) -
+           this.dt*0.01*this.Dimage[idx]
           );
           BMat.push(Mat[idx]);
           BMat2.push(Mat2[idx]);
@@ -119,6 +101,26 @@ function WaveBox(width,dt) {
           BMat2[idx] = this.dt*(Mat[idxU]+Mat[idxD]+Mat[idxL]+Mat[idxR]-4*Mat[idx]);
           this.image[idx] += BMat[idx];
           this.Dimage[idx] += BMat2[idx];
+        }
+      }
+
+      if(k===0) {
+        for(var i=0; i<this.width; i++) {
+          var idx = this.idx(i,0);
+          Mat[idx] = 0;
+          BMat[idx]=0;
+          var idx=this.idx(i,this.width-1);
+          Mat[idx] = 0;
+          BMat[idx] = 0;
+        }
+
+        for(var j=0; j<this.width; j++) {
+          var idx = this.idx(0,j);
+          Mat[idx] = 0;
+          BMat[idx] = 0;
+          var idx  = this.idx(this.width-1,j);
+          Mat[idx] = 0;
+          BMat[idx] = 0;
         }
       }
 
