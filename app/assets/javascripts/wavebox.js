@@ -58,7 +58,7 @@ function WaveBox(width,dt) {
   }
 
   // step forward the physical model
-  this.stepForward = function() {
+ /* this.stepForward = function() {
     for(var i=1; i<this.width-1; i++) {
       for(var j=1; j<this.width-1; j++) {
         var idx = this.idx(i,j);
@@ -73,5 +73,49 @@ function WaveBox(width,dt) {
            this.dt*0.025*this.Dimage[idx];
       }
     }
-  }
+  } */
+
+
+
+  // step forward the physical model
+  this.stepForward = function() {
+   
+    var Mat = [];
+    for(var i=0; i<this.width; i++) {
+      if((i===0) || (i===this.width-1)) { Mat.push(0.0); }
+      else {
+      for(var j=0; j<this.width; j++) {
+        var idx = this.idx(i,j);
+        Mat.push(
+          this.image[idx] +
+           this.dt*(Math.sin(this.c/10))*Math.exp((-10)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(50*50)+Math.pow(this.pxSz()*j-this.cursorX,2)/(50*50))) -
+           this.dt*0.025*this.Dimage[idx]; 
+        );
+
+        this.image[idx] =this.image[idx]+this.dt*this.Dimage[idx];
+        this.Dimage[idx] = Mat[idx];
+      }
+     }
+    }
+
+  for(var k = 0; k < 10; k++) {
+    for(var i=1; i<this.width-1; i++) {
+      for(var j=1; j<this.width-1; j++) {
+        var idx = this.idx(i,j);
+        var idxU = this.idx(i-1,j);
+        var idxD = this.idx(i+1,j);
+        var idxL = this.idx(i,j-1);
+        var idxR = this.idx(i,j+1);
+        Mat[idx] = (Mat[idxU]+Mat[idxD]+
+          Mat[idxL]+Mat[idxR]-4*Mat[idx]) * this.dt;
+        this.Dimage[idx] += Mat[idx]; 
+  
+      }
+    }
+
+    }
+
+ }
+
+
 }
