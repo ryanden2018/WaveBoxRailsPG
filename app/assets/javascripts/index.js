@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", function(e){
   setInterval( function() {
       wb.stepForward();
       wb.c += 0.1;
+      wb.stepForward();
+      wb.c += 0.1;
   }, 1);
 
   setInterval( function() {
