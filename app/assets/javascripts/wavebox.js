@@ -67,7 +67,7 @@ function WaveBox(width,dt) {
         var idxL = this.idx(i,j-1);
         var idxR = this.idx(i,j+1);
         this.image[idx] += this.Dimage[idx]*this.dt;
-        this.Dimage[idx] += (this.image[idxU]+this.image[idxD]+
+        this.Dimage[idx] += 10*(this.image[idxU]+this.image[idxD]+
           this.image[idxL]+this.image[idxR]-4*this.image[idx]) * this.dt +
            this.dt*(Math.sin(this.c/10))*Math.exp((-10)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(50*50)+Math.pow(this.pxSz()*j-this.cursorX,2)/(50*50))) -
            this.dt*0.025*this.Dimage[idx];
