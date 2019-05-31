@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function(e){
       wb.stepForward();
       wb.c += 0.1;
     }
-  }, 1);
+  }, 10);
 
   setInterval( function() {
     wb.update();
