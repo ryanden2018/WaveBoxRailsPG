@@ -89,7 +89,7 @@ function WaveBox(width,dt) {
         Mat.push(
           this.image[idx] +
            this.dt*(Math.sin(this.c/10))*Math.exp((-10)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(50*50)+Math.pow(this.pxSz()*j-this.cursorX,2)/(50*50))) -
-           this.dt*0.025*this.Dimage[idx]; 
+           this.dt*0.025*this.Dimage[idx]
         );
 
         this.image[idx] =this.image[idx]+this.dt*this.Dimage[idx];
