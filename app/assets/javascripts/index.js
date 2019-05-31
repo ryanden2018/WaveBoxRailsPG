@@ -18,11 +18,9 @@ document.addEventListener("DOMContentLoaded", function(e){
 
   
   setInterval( function() {
-    for(var i=0; i<100; i++) {
       wb.stepForward();
       wb.c += 0.1;
-    }
-  }, 10);
+  }, 1);
 
   setInterval( function() {
     wb.update();
