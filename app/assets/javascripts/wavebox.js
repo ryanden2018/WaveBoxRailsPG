@@ -7,6 +7,7 @@ function WaveBox(width,dt) {
   this.cursorX = Math.round(8*width/2);
   this.cursorY = Math.round(8*width/2);
   this.div = document.createElement("div");
+  this.divchildren = [];
   this.c = 0;
   for(var i=0; i<this.width; i++) {
     for(var j=0; j<this.width; j++) {
@@ -39,6 +40,7 @@ function WaveBox(width,dt) {
         var pxDiv = document.createElement("div");
         pxDiv.style = this.pxDivStyle(i,j,this.color(this.image[idx]));
         this.div.append(pxDiv);
+        this.divchildren.push(pxDiv);
       }
     }
     this.div.style="position:relative;margin:auto;width:"+(this.pxSz()*this.width)+"px;";
@@ -50,7 +52,7 @@ function WaveBox(width,dt) {
     for(var i=0; i<this.width; i++) {
       for(var j=0; j<this.width; j++) {
         var idx = this.idx(i,j);
-        this.div.children[idx].style.background = this.color(this.image[idx]);
+        this.divchildren[idx].style.background = this.color(this.image[idx]);
       }
     }
   }
