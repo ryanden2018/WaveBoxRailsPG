@@ -110,7 +110,7 @@ function WaveBox(width,dt) {
         var idxD = this.idx(i+1,j);
         var idxL = this.idx(i,j-1);
         var idxR = this.idx(i,j+1);
-        Mat[idx] = (Mat2[idxU]+Mat2[idxD]+
+        Mat[idx] = 10*(Mat2[idxU]+Mat2[idxD]+
           Mat2[idxL]+Mat2[idxR]-4*Mat2[idx]) * this.dt;
         this.Dimage[idx] += Mat[idx]; 
   
@@ -124,7 +124,7 @@ function WaveBox(width,dt) {
         var idxD = this.idx(i+1,j);
         var idxL = this.idx(i,j-1);
         var idxR = this.idx(i,j+1);
-        Mat2[idx] = (Mat[idxU]+Mat[idxD]+
+        Mat2[idx] = 10*(Mat[idxU]+Mat[idxD]+
           Mat[idxL]+Mat[idxR]-4*Mat[idx]) * this.dt;
         this.Dimage[idx] += Mat2[idx]; 
   
