@@ -81,6 +81,7 @@ function WaveBox(width,dt) {
   this.stepForward = function() {
    
     var Mat = [];
+    var Mat2 = [];
     for(var i=0; i<this.width; i++) {
       if((i===0) || (i===this.width-1)) { Mat.push(0.0); }
       else {
@@ -93,6 +94,7 @@ function WaveBox(width,dt) {
            this.dt*(Math.sin(this.c/10))*Math.exp((-10)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(50*50)+Math.pow(this.pxSz()*j-this.cursorX,2)/(50*50))) -
            this.dt*0.025*this.Dimage[idx]
         );
+        Mat2.push(Mat[idx]);
 
         this.image[idx] =this.image[idx]+this.dt*this.Dimage[idx];
         this.Dimage[idx] = Mat[idx];
@@ -101,7 +103,7 @@ function WaveBox(width,dt) {
      }
     }
 
-  for(var k = 0; k < 10; k++) {
+  for(var k = 0; k < 5; k++) {
     for(var i=1; i<this.width-1; i++) {
       for(var j=1; j<this.width-1; j++) {
         var idx = this.idx(i,j);
@@ -109,9 +111,23 @@ function WaveBox(width,dt) {
         var idxD = this.idx(i+1,j);
         var idxL = this.idx(i,j-1);
         var idxR = this.idx(i,j+1);
-        Mat[idx] = (Mat[idxU]+Mat[idxD]+
-          Mat[idxL]+Mat[idxR]-4*Mat[idx]) * this.dt;
+        Mat[idx] = (Mat2[idxU]+Mat2[idxD]+
+          Mat2[idxL]+Mat2[idxR]-4*Mat2[idx]) * this.dt;
         this.Dimage[idx] += Mat[idx]; 
+  
+      }
+    }
+
+    for(var i=1; i<this.width-1; i++) {
+      for(var j=1; j<this.width-1; j++) {
+        var idx = this.idx(i,j);
+        var idxU = this.idx(i-1,j);
+        var idxD = this.idx(i+1,j);
+        var idxL = this.idx(i,j-1);
+        var idxR = this.idx(i,j+1);
+        Mat2[idx] = (Mat[idxU]+Mat[idxD]+
+          Mat[idxL]+Mat[idxR]-4*Mat[idx]) * this.dt;
+        this.Dimage[idx] += Mat2[idx]; 
   
       }
     }
