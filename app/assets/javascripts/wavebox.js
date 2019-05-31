@@ -98,7 +98,7 @@ function WaveBox(width,dt) {
           var idxL = this.idx(i,j-1);
           var idxR = this.idx(i,j+1);
           BMat[idx] = Mat2[idx]*this.dt;
-          BMat2[idx] = this.dt*(Mat[idxU]+Mat[idxD]+Mat[idxL]+Mat[idxR]-4*Mat[idx]);
+          BMat2[idx] = this.dt*2*(Mat[idxU]+Mat[idxD]+Mat[idxL]+Mat[idxR]-4*Mat[idx]);
           this.image[idx] += BMat[idx];
           this.Dimage[idx] += BMat2[idx];
         }
@@ -132,7 +132,7 @@ function WaveBox(width,dt) {
           var idxL = this.idx(i,j-1);
           var idxR = this.idx(i,j+1);
           Mat[idx] = BMat2[idx]*this.dt;
-          Mat2[idx] = this.dt*(BMat[idxU]+BMat[idxD]+BMat[idxL]+BMat[idxR]-4*BMat[idx]);
+          Mat2[idx] = this.dt*2*(BMat[idxU]+BMat[idxD]+BMat[idxL]+BMat[idxR]-4*BMat[idx]);
           this.image[idx] += Mat[idx];
           this.Dimage[idx] += Mat2[idx];
         }
