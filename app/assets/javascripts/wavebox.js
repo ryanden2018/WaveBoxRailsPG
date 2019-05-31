@@ -85,7 +85,7 @@ function WaveBox(width,dt) {
       if((i===0) || (i===this.width-1)) { Mat.push(0.0); }
       else {
       for(var j=0; j<this.width; j++) {
-        if((j===0) || (j===this.width-1)) {Math.push(0.0);}
+        if((j===0) || (j===this.width-1)) {Mat.push(0.0);}
          else {
         var idx = this.idx(i,j);
         Mat.push(
