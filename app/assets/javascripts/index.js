@@ -50,7 +50,8 @@ window.onload = function() {
     context.putImageData(imgdata,0,0);
 
     for(var l = 0; l < wb.barriers.length; l++) {
-      barrier = wb.barriers[l];
+      var barrier = wb.barriers[l];
+      context.beginPath();
       context.arc(2*barrier[0],2*barrier[1],2*barrier[2],0,2*Math.PI,false);
       context.fillStyle="orange";
       context.fill();
