@@ -4,10 +4,10 @@ function WaveBox(width,dt) {
   this.image = [];
   this.Dimage = [];
   this.dt = dt;
-  this.cursorX = Math.round(8*width/2);
-  this.cursorY = Math.round(8*width/2);
-  this.div = document.createElement("div");
-  this.divchildren = [];
+  this.cursorX = Math.round(width/2);
+  this.cursorY = Math.round(width/2);
+  //this.div = document.createElement("div");
+  //this.divchildren = [];
   this.c = 0;
   for(var i=0; i<this.width; i++) {
     for(var j=0; j<this.width; j++) {
@@ -17,15 +17,15 @@ function WaveBox(width,dt) {
   }
   
 
-  this.pxSz = function() { return 8; }
+  this.pxSz = function() { return 1; }
 
   this.idx = function(i,j) { 
     return this.width*i+j;
   }
 
-  this.pxDivStyle = function(i,j,color) {
-    return "position:absolute;background:"+color+";top:"+(this.pxSz()*i)+"px;left:"+(this.pxSz()*j)+"px;width:"+(this.pxSz())+"px;height:"+(this.pxSz())+"px;";
-  }
+  //this.pxDivStyle = function(i,j,color) {
+  //  return "position:absolute;background:"+color+";top:"+(this.pxSz()*i)+"px;left:"+(this.pxSz()*j)+"px;width:"+(this.pxSz())+"px;height:"+(this.pxSz())+"px;";
+ // }
 
   this.color = function(val) {
     var normVal = ""+Math.max(0,Math.min(255,Math.round(0.75*val*255)));
@@ -33,7 +33,7 @@ function WaveBox(width,dt) {
   }
 
   // only call render() once per instance, see update()
-  this.render = function() {
+  /*this.render = function() {
     for(var i=0; i<this.width; i++) {
       for(var j=0; j<this.width; j++) {
         var idx = this.idx(i,j);
@@ -45,10 +45,10 @@ function WaveBox(width,dt) {
     }
     this.div.style="position:relative;margin:auto;width:"+(this.pxSz()*this.width)+"px;";
     return this.div;
-  }
+  }*/
 
   // call update() as many times as desired after render() has been called
-  this.update = function() {
+  /*this.update = function() {
     for(var i=0; i<this.width; i++) {
       for(var j=0; j<this.width; j++) {
         var idx = this.idx(i,j);
@@ -56,12 +56,13 @@ function WaveBox(width,dt) {
       }
     }
   }
-
+*/
 
 
   // step forward the physical model
   this.stepForward = function() {
 
+    this.c += 1;
     var Mat = [];
     var Mat2 = [];
     var BMat = [];
