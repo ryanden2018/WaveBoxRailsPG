@@ -15,7 +15,7 @@ function WaveBox(width,dt) {
   }
   
 
-  this.pxSz = function() { return 1; }
+  this.pxSz = function() { return 2; }
 
   this.idx = function(i,j) { 
     return this.width*i+j;
@@ -25,12 +25,13 @@ function WaveBox(width,dt) {
 
   // step forward the physical model
   this.stepForward = function() {
-
     this.c += 1;
     var Mat = [];
     var Mat2 = [];
     var BMat = [];
     var BMat2 = [];
+
+    if(this.c % 60 === 0) { console.log("tick"); }
 
     for(var i=0; i<this.width; i++) {
       for(var j=0; j<this.width; j++) {

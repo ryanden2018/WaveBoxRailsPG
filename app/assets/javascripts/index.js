@@ -7,7 +7,7 @@ window.onload = function() {
   var context = canvas.getContext("2d");
   var width = canvas.width;
   var height = canvas.height;
-  var wb = new WaveBox(width,.2);
+  var wb = new WaveBox(width/2,.2);
 
   var imgdata = context.createImageData(width,height);
 
@@ -16,7 +16,7 @@ window.onload = function() {
     for(var i=0; i<width; i++) {
       for(var j=0; j<width; j++) {
         var idx0 = (i*width+j)*4;
-        var val = Math.floor(Math.max(0.0,Math.min(1.0,0.5+0.05*(wb.image[i*width+j]-0.5)))*255);
+        var val = Math.floor(Math.max(0.0,Math.min(1.0,0.5+0.05*(wb.image[ Math.floor(i/2)*wb.width+Math.floor(j/2) ]-0.5)))*255);
         imgdata.data[idx0] = val;
         imgdata.data[idx0+1] = val;
         imgdata.data[idx0+2] = val;
