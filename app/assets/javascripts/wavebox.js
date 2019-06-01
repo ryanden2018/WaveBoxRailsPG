@@ -3,15 +3,34 @@ function WaveBox(width,dt) {
   this.width = width;
   this.image = [];
   this.Dimage = [];
+  this.hbarriers = [[[100,100],[100,200]]];
+  this.vbarriers = [];
   this.dt = dt;
-  this.cursorX = Math.round(width/2);
-  this.cursorY = Math.round(width/2);
+  this.cursorX = Math.round(width);
+  this.cursorY = Math.round(width);
   this.c = 0;
   for(var i=0; i<this.width; i++) {
     for(var j=0; j<this.width; j++) {
       this.image.push(0.5);
       this.Dimage.push(0.0);
     }
+  }
+
+  this.inBarrier = function(i,j) {
+    for(var l = 0; l < this.hbarriers.length; l++) {
+      var barrier = this.hbarriers[l];
+      if((i === barrier[0][0]) && (barrier[0][1] < j) && (j < barrier[1][1])) {
+        return true;
+      }
+    }
+    
+    for(var l = 0; l < this.vbarriers.length; l++) {
+      var barrier = this.vbarriers[l];
+      if((j === barrier[0][1]) && (barrier[0][0] < i) && (i < barrier[1][0])) {
+        return true;
+      }
+    }
+    return false;
   }
   
 
@@ -31,11 +50,9 @@ function WaveBox(width,dt) {
     var BMat = [];
     var BMat2 = [];
 
-    if(this.c % 60 === 0) { console.log("tick"); }
-
     for(var i=0; i<this.width; i++) {
       for(var j=0; j<this.width; j++) {
-        if((i===0)||(j===0)||(i===this.width-1)||(j===this.width-1)) {
+        if((i===0)||(j===0)||(i===this.width-1)||(j===this.width-1)||this.inBarrier(i,j)) {
           Mat.push(0.5);
           Mat2.push(0.0);
           BMat.push(0.5);
@@ -58,15 +75,17 @@ function WaveBox(width,dt) {
     for(var k=0; k<5; k++) {
       for(var i=1; i<this.width-1; i++) {
         for(var j=1; j<this.width-1; j++) {
-          var idx = this.idx(i,j);
-          var idxU = this.idx(i-1,j);
-          var idxD = this.idx(i+1,j);
-          var idxL = this.idx(i,j-1);
-          var idxR = this.idx(i,j+1);
-          BMat[idx] = Mat2[idx]*this.dt;
-          BMat2[idx] = this.dt*2*(Mat[idxU]+Mat[idxD]+Mat[idxL]+Mat[idxR]-4*Mat[idx]);
-          this.image[idx] += BMat[idx];
-          this.Dimage[idx] += BMat2[idx];
+          if(!this.inBarrier(i,j)){
+            var idx = this.idx(i,j);
+            var idxU = this.idx(i-1,j);
+            var idxD = this.idx(i+1,j);
+            var idxL = this.idx(i,j-1);
+            var idxR = this.idx(i,j+1);
+            BMat[idx] = Mat2[idx]*this.dt;
+            BMat2[idx] = this.dt*2*(Mat[idxU]+Mat[idxD]+Mat[idxL]+Mat[idxR]-4*Mat[idx]);
+            this.image[idx] += BMat[idx];
+            this.Dimage[idx] += BMat2[idx];
+          }
         }
       }
 
@@ -88,19 +107,31 @@ function WaveBox(width,dt) {
           Mat[idx] = 0;
           BMat[idx] = 0;
         }
+
+        for(var i=0; i<this.width; i++) {
+          for(var j=0; j<this.width; j++) {
+            if(this.inBarrier(i,j)){
+              Mat[this.idx(i,j)] = 0;
+              BMat[this.idx(i,j)] = 0;
+            }
+          }
+        }
+        
       }
 
       for(var i=1; i<this.width-1; i++) {
         for(var j=1; j<this.width-1; j++) {
-          var idx = this.idx(i,j);
-          var idxU = this.idx(i-1,j);
-          var idxD = this.idx(i+1,j);
-          var idxL = this.idx(i,j-1);
-          var idxR = this.idx(i,j+1);
-          Mat[idx] = BMat2[idx]*this.dt;
-          Mat2[idx] = this.dt*2*(BMat[idxU]+BMat[idxD]+BMat[idxL]+BMat[idxR]-4*BMat[idx]);
-          this.image[idx] += Mat[idx];
-          this.Dimage[idx] += Mat2[idx];
+          if(!this.inBarrier(i,j)){
+            var idx = this.idx(i,j);
+            var idxU = this.idx(i-1,j);
+            var idxD = this.idx(i+1,j);
+            var idxL = this.idx(i,j-1);
+            var idxR = this.idx(i,j+1);
+            Mat[idx] = BMat2[idx]*this.dt;
+            Mat2[idx] = this.dt*2*(BMat[idxU]+BMat[idxD]+BMat[idxL]+BMat[idxR]-4*BMat[idx]);
+            this.image[idx] += Mat[idx];
+            this.Dimage[idx] += Mat2[idx];
+          }
         }
       }
     }
