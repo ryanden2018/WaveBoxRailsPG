@@ -3,8 +3,7 @@ function WaveBox(width,dt) {
   this.width = width;
   this.image = [];
   this.Dimage = [];
-  this.hbarriers = [[[100,100],[100,200]]];
-  this.vbarriers = [];
+  this.barriers = [];
   this.dt = dt;
   this.cursorX = Math.round(width);
   this.cursorY = Math.round(width);
@@ -17,19 +16,14 @@ function WaveBox(width,dt) {
   }
 
   this.inBarrier = function(i,j) {
-    for(var l = 0; l < this.hbarriers.length; l++) {
-      var barrier = this.hbarriers[l];
-      if((i === barrier[0][0]) && (barrier[0][1] < j) && (j < barrier[1][1])) {
+    for(var l = 0; l < this.barriers.length; l++) {
+      var barrier = this.barriers[l];
+      var dist = Math.sqrt(Math.pow(j-barrier[0],2)+Math.pow(i-barrier[1],2));
+      if(dist < barrier[2]) {
         return true;
       }
     }
     
-    for(var l = 0; l < this.vbarriers.length; l++) {
-      var barrier = this.vbarriers[l];
-      if((j === barrier[0][1]) && (barrier[0][0] < i) && (i < barrier[1][0])) {
-        return true;
-      }
-    }
     return false;
   }
   
@@ -57,6 +51,7 @@ function WaveBox(width,dt) {
           Mat2.push(0.0);
           BMat.push(0.5);
           BMat2.push(0.0);
+          this.image[this.idx(i,j)] = 0.5;
         } else {
           var idx = this.idx(i,j);
           Mat.push(this.image[idx]);

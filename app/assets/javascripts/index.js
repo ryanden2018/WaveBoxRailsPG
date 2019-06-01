@@ -25,6 +25,13 @@ window.onload = function() {
     }
   }
 
+  document.addEventListener("mouseup",
+  function(e) {
+    console.log(e.x);
+    console.log(e.y);
+    wb.barriers.push([(e.x-innerbox.offsetLeft)/2,(e.y-160+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0))/2,20]);
+  });
+
   document.addEventListener("mousemove",
     function(e) {wb.cursorX=e.x-10-innerbox.offsetLeft;wb.cursorY=e.y-160+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
 
@@ -41,6 +48,13 @@ window.onload = function() {
     window.requestAnimationFrame(main);
     buildImg();
     context.putImageData(imgdata,0,0);
+
+    for(var l = 0; l < wb.barriers.length; l++) {
+      barrier = wb.barriers[l];
+      context.arc(2*barrier[0],2*barrier[1],2*barrier[2],0,2*Math.PI,false);
+      context.fillStyle="orange";
+      context.fill();
+    }
   }
 
   main(0);
