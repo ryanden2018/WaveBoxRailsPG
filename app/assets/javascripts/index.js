@@ -27,8 +27,6 @@ window.onload = function() {
 
   document.addEventListener("mouseup",
   function(e) {
-    console.log(e.x);
-    console.log(e.y);
     wb.barriers.push([(e.x-innerbox.offsetLeft)/2,(e.y-160+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0))/2,20]);
   });
 
