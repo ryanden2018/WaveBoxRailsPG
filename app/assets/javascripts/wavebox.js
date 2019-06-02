@@ -38,10 +38,6 @@ function WaveBox(width,dt) {
 
   // step forward the physical model
   this.stepForward = function() {
-
-    if(this.c % 600 === 0) {
-      console.log("tick");
-    }
     this.c += 1;
 
     var Mat = [];
