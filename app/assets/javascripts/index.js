@@ -11,12 +11,20 @@ window.onload = function() {
 
   var imgdata = context.createImageData(width,height);
 
+  function absroot(x) {
+    if(x<0) {
+      return (-1)*Math.sqrt(Math.abs(x));
+    } else {
+      return Math.sqrt(x);
+    }
+  }
+
   function buildImg() {
     wb.stepForward();
     for(var i=0; i<width; i++) {
       for(var j=0; j<width; j++) {
         var idx0 = (i*width+j)*4;
-        var val = Math.floor(Math.max(0.0,Math.min(1.0,0.5+150*(wb.image[ Math.floor(i/2)*wb.width+Math.floor(j/2) ]-0.5)))*255);
+        var val = Math.floor(Math.max(0.0,Math.min(1.0,0.5+7.5*absroot(wb.image[ Math.floor(i/2)*wb.width+Math.floor(j/2) ]-0.5)))*255);
         imgdata.data[idx0] = Math.floor(val*53/255);
         imgdata.data[idx0+1] = Math.floor(val*224/255);
         imgdata.data[idx0+2] = Math.floor(val*255/255);
