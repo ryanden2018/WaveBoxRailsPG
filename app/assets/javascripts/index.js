@@ -27,20 +27,23 @@ window.onload = function() {
 
   document.addEventListener("mouseup",
   function(e) {
-    wb.barriers.push([(e.x-innerbox.offsetLeft)/2,(e.y-160+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0))/2,20]);
+    wb.barriers.push([(e.x-innerbox.offsetLeft)/2,(e.y-200+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0))/2,20]);
   });
 
   document.addEventListener("mousemove",
-    function(e) {wb.cursorX=e.x-10-innerbox.offsetLeft;wb.cursorY=e.y-160+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
+    function(e) {
+      wb.cursorX=e.x-10-innerbox.offsetLeft;
+      wb.cursorY=e.y-200+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
+     });
 
    document.addEventListener("touchmove",
-    function(e) {wb.cursorX=e.changedTouches[0].screenX-10-innerbox.offsetLeft;wb.cursorY=e.changedTouches[0].screenY-160+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
+    function(e) {wb.cursorX=e.changedTouches[0].screenX-10-innerbox.offsetLeft;wb.cursorY=e.changedTouches[0].screenY-200+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
 
     document.addEventListener("touchstart",
-    function(e) {wb.cursorX=e.changedTouches[0].screenX-10-innerbox.offsetLeft;wb.cursorY=e.changedTouches[0].screenY-160+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
+    function(e) {wb.cursorX=e.changedTouches[0].screenX-10-innerbox.offsetLeft;wb.cursorY=e.changedTouches[0].screenY-200+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
 
     document.addEventListener("touchend",
-    function(e) {wb.cursorX=e.changedTouches[0].screenX-10-innerbox.offsetLeft;wb.cursorY=e.changedTouches[0].screenY-160+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
+    function(e) {wb.cursorX=e.changedTouches[0].screenX-10-innerbox.offsetLeft;wb.cursorY=e.changedTouches[0].screenY-200+(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);});
 
   function main(tf) {
     window.requestAnimationFrame(main);
