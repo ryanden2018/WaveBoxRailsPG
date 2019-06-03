@@ -34,6 +34,13 @@ function WaveBox(width,dt) {
     return this.width*i+j;
   }
 
+  this.sgn = function(x) {
+    if(x<0) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
 
 
   // step forward the physical model
@@ -58,7 +65,7 @@ function WaveBox(width,dt) {
           Mat.push(this.image[idx]);
           Mat2.push(
             this.Dimage[idx]
-            +this.dt*100*(Math.cos(2*Math.PI*this.c/80))*Math.exp((-200)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(300*300)+Math.pow(this.pxSz()*j-this.cursorX,2)/(300*300))) 
+            -this.dt*100*(Math.cos(2*Math.PI*this.c/80))*Math.exp((-200)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(300*300)+Math.pow(this.pxSz()*j-this.cursorX,2)/(300*300))) 
            -0.1*this.dt*this.Dimage[idx]
           );
           BMat.push(Mat[idx]);
