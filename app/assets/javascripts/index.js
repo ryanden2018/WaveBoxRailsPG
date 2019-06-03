@@ -9,6 +9,7 @@ window.onload = function() {
   var height = canvas.height;
   var wb = new WaveBox(width/2,1.0/1800);
 
+
   var imgdata = context.createImageData(width,height);
 
   function absroot(x) {
@@ -56,6 +57,8 @@ window.onload = function() {
   function main(tf) {
     window.requestAnimationFrame(main);
     buildImg();
+
+
     context.putImageData(imgdata,0,0);
 
     for(var l = 0; l < wb.barriers.length; l++) {
