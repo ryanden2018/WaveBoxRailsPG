@@ -11,8 +11,8 @@ if(useGPUJS) {
   var context = canvas.getContext("2d");
   var width = canvas.width;
   var height = canvas.height;
-  var dx = 1/(width/2);
-  var dt = 0.5*dx*dx;
+  var dx = 1/(width/6);
+  var dt = 0.25*dx*dx;
   var t = 0;
   var imgdata = context.createImageData(width,height);
   function absroot(x) {
@@ -26,31 +26,31 @@ if(useGPUJS) {
 
   var initImageKernel = gpu.createKernel(initImage)
     .setPipeline(true)
-    .setOutput([width/2,width/2]);
+    .setOutput([width/6,width/6]);
   
   var initDimageKernel = gpu.createKernel(initDimage)
     .setPipeline(true)
-    .setOutput([width/2,width/2]);
+    .setOutput([width/6,width/6]);
   
   var waveboxUpdateImageKernel = gpu.createKernel(waveboxUpdateImage)
     .setPipeline(true)
     .setImmutable(true)
-    .setOutput([width/2,width/2])
+    .setOutput([width/6,width/6])
   
   var waveboxUpdateDimageKernel = gpu.createKernel(waveboxUpdateDimage)
     .setPipeline(true)
     .setImmutable(true)
-    .setOutput([width/2,width/2]);
+    .setOutput([width/6,width/6]);
   
   var image = initImageKernel();
   var Dimage = initDimageKernel();
 
 
   function buildImg() {
-    for(var m = 0; m < 80; m++) {
+    for(var m = 0; m < 200; m++) {
       t += dt;
-      var newImage = waveboxUpdateImageKernel(width/2,image,Dimage,t);
-      var newDimage = waveboxUpdateDimageKernel(width/2,image,Dimage,t);
+      var newImage = waveboxUpdateImageKernel(width/6,image,Dimage,t);
+      var newDimage = waveboxUpdateDimageKernel(width/6,image,Dimage,t);
       image = newImage;
       Dimage = newDimage;
     }
@@ -60,8 +60,8 @@ if(useGPUJS) {
     for(var i=0; i<width; i++) {
       for(var j=0; j<width; j++) {
         var idx0 = (i*width+j)*4;
-        //var val = Math.floor(Math.max(0.0,Math.min(1.0,0.5+7.5*absroot(imageArray[Math.floor(i/2)][Math.floor(j/2)]-0.5)))*255);
-        var val = Math.floor(Math.max(0.0,Math.min(1.0,0.5+(imageArray[Math.floor(i/2)][Math.floor(j/2)]-0.5)))*255);
+        var val = Math.floor(Math.max(0.0,Math.min(1.0,0.5+7.5*absroot(imageArray[Math.floor(i/6)][Math.floor(j/6)]-0.5)))*255);
+        //var val = Math.floor(Math.max(0.0,Math.min(1.0,0.5+(imageArray[Math.floor(i/3)][Math.floor(j/3)]-0.5)))*255);
         imgdata.data[idx0] = Math.floor(val*53/255);
         imgdata.data[idx0+1] = Math.floor(val*224/255);
         imgdata.data[idx0+2] = Math.floor(val*255/255);
