@@ -26,6 +26,11 @@ function WaveBox(width,dt) {
     
     return false;
   }
+
+  this.nearCursor = function(i,j) {
+    return  Math.pow(this.pxSz()*i-this.cursorY,2)+Math.pow(this.pxSz()*j-this.cursorX,2) < 20;
+    
+  }
   
 
   this.pxSz = function() { return 2; }
@@ -60,13 +65,18 @@ function WaveBox(width,dt) {
           BMat.push(0.5);
           BMat2.push(0.0);
           this.image[this.idx(i,j)] = 0.5;
+        } else if ( this.nearCursor(i,j) ) {
+          var value = 0.5 - 0.005*Math.sin(2*Math.PI*this.c/50);
+          Mat.push(value);
+          Mat2.push(0.0);
+          BMat.push(value);
+          BMat2.push(0.0);
+          this.image[this.idx(i,j)] = value;
         } else {
           var idx = this.idx(i,j);
           Mat.push(this.image[idx]);
           Mat2.push(
-            this.Dimage[idx]
-            -this.dt*100*(Math.sin(2*Math.PI*this.c/80))*Math.exp((-200)*(Math.pow(this.pxSz()*i-this.cursorY,2)/(300*300)+Math.pow(this.pxSz()*j-this.cursorX,2)/(300*300))) 
-           -0.1*this.dt*this.Dimage[idx]
+            this.Dimage[idx]-0.1*this.dt*this.Dimage[idx]
           );
           BMat.push(Mat[idx]);
           BMat2.push(Mat2[idx]);
@@ -78,7 +88,7 @@ function WaveBox(width,dt) {
     for(var k=0; k<5; k++) {
       for(var i=1; i<this.width-1; i++) {
         for(var j=1; j<this.width-1; j++) {
-          if(!this.inBarrier(i,j)){
+          if((!this.inBarrier(i,j)) && (!this.nearCursor(i,j))){
             var idx = this.idx(i,j);
             var idxU = this.idx(i-1,j);
             var idxD = this.idx(i+1,j);
@@ -113,7 +123,7 @@ function WaveBox(width,dt) {
 
         for(var i=0; i<this.width; i++) {
           for(var j=0; j<this.width; j++) {
-            if(this.inBarrier(i,j)){
+            if(this.inBarrier(i,j) || this.nearCursor(i,j)){
               Mat[this.idx(i,j)] = 0;
               BMat[this.idx(i,j)] = 0;
             }
@@ -124,7 +134,7 @@ function WaveBox(width,dt) {
 
       for(var i=1; i<this.width-1; i++) {
         for(var j=1; j<this.width-1; j++) {
-          if(!this.inBarrier(i,j)){
+          if(!this.inBarrier(i,j) && !this.nearCursor(i,j)){
             var idx = this.idx(i,j);
             var idxU = this.idx(i-1,j);
             var idxD = this.idx(i+1,j);
