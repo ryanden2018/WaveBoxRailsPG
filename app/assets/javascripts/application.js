@@ -13,4 +13,7 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
-//= require_tree .
+//= require ./lib/gpu/bin/gpu-browser.min.js
+//= require ./index.js
+//= require ./wavebox.js
+//= require ./waveboxGPU.js
