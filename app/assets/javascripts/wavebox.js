@@ -5,6 +5,10 @@ function WaveBox(width,dt) {
   this.Dimage = [];
   this.barriers = [];
   this.dt = dt;
+  this.oldX = Math.round(width);
+  this.oldY = Math.round(width);
+  this.curX = Math.round(width);
+  this.curY = Math.round(width);
   this.cursorX = Math.round(width);
   this.cursorY = Math.round(width);
   this.c = 0;
@@ -29,7 +33,14 @@ function WaveBox(width,dt) {
 
   this.nearCursor = function(i,j) {
     return  Math.pow(this.pxSz()*i-this.cursorY,2)+Math.pow(this.pxSz()*j-this.cursorX,2) < 20;
-    
+  }
+
+  this.nearCurCursor = function(i,j) {
+    return  Math.pow(this.pxSz()*i-this.curY,2)+Math.pow(this.pxSz()*j-this.curX,2) < 20;
+  }
+
+  this.nearOldCursor = function(i,j) {
+    return  Math.pow(this.pxSz()*i-this.oldY,2)+Math.pow(this.pxSz()*j-this.oldX,2) < 20;
   }
   
 
@@ -52,6 +63,7 @@ function WaveBox(width,dt) {
   this.stepForward = function() {
     this.c += 1;
 
+
     var Mat = [];
     var Mat2 = [];
     var BMat = [];
@@ -65,8 +77,22 @@ function WaveBox(width,dt) {
           BMat.push(0.5);
           BMat2.push(0.0);
           this.image[this.idx(i,j)] = 0.5;
+        } else if ( this.nearCurCursor(i,j) ) {
+          var value = 0.5 - 0.1*Math.sin(2*Math.PI*this.c/50);
+          Mat.push(value);
+          Mat2.push(0.0);
+          BMat.push(value);
+          BMat2.push(0.0);
+          this.image[this.idx(i,j)] = value;
+        } else if ( this.nearOldCursor(i,j) ) {
+          var value = 0.5;
+          Mat.push(value);
+          Mat2.push(0.0);
+          BMat.push(value);
+          BMat2.push(0.0);
+          this.image[this.idx(i,j)] = value;
         } else if ( this.nearCursor(i,j) ) {
-          var value = 0.5 - 0.005*Math.sin(2*Math.PI*this.c/50);
+          var value = 0.5 - 0.01*Math.sin(2*Math.PI*this.c/50);
           Mat.push(value);
           Mat2.push(0.0);
           BMat.push(value);
@@ -76,7 +102,7 @@ function WaveBox(width,dt) {
           var idx = this.idx(i,j);
           Mat.push(this.image[idx]);
           Mat2.push(
-            this.Dimage[idx]-0.1*this.dt*this.Dimage[idx]
+            this.Dimage[idx]-5*this.dt*this.Dimage[idx]
           );
           BMat.push(Mat[idx]);
           BMat2.push(Mat2[idx]);
@@ -88,7 +114,7 @@ function WaveBox(width,dt) {
     for(var k=0; k<5; k++) {
       for(var i=1; i<this.width-1; i++) {
         for(var j=1; j<this.width-1; j++) {
-          if((!this.inBarrier(i,j)) && (!this.nearCursor(i,j))){
+          if((!this.inBarrier(i,j)) && !this.nearOldCursor(i,j) && (!this.nearCurCursor(i,j))){
             var idx = this.idx(i,j);
             var idxU = this.idx(i-1,j);
             var idxD = this.idx(i+1,j);
@@ -123,7 +149,7 @@ function WaveBox(width,dt) {
 
         for(var i=0; i<this.width; i++) {
           for(var j=0; j<this.width; j++) {
-            if(this.inBarrier(i,j) || this.nearCursor(i,j)){
+            if(this.inBarrier(i,j) || this.nearCursor(i,j) || this.nearOldCursor(i,j) || this.nearCurCursor(i,j)){
               Mat[this.idx(i,j)] = 0;
               BMat[this.idx(i,j)] = 0;
             }
@@ -134,7 +160,7 @@ function WaveBox(width,dt) {
 
       for(var i=1; i<this.width-1; i++) {
         for(var j=1; j<this.width-1; j++) {
-          if(!this.inBarrier(i,j) && !this.nearCursor(i,j)){
+          if(!this.inBarrier(i,j) && !this.nearCursor(i,j) && !this.nearOldCursor(i,j) && !this.nearCurCursor(i,j)){
             var idx = this.idx(i,j);
             var idxU = this.idx(i-1,j);
             var idxD = this.idx(i+1,j);
@@ -147,6 +173,13 @@ function WaveBox(width,dt) {
           }
         }
       }
+    }
+
+    if(this.c % 50 === 0) {
+      this.oldX = this.curX;
+      this.oldY = this.curY;
+      this.curX = this.cursorX;
+      this.curY = this.cursorY;
     }
 
 
