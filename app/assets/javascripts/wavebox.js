@@ -5,6 +5,8 @@ function WaveBox(width,dt) {
   this.Dimage = [];
   this.barriers = [];
   this.dt = dt;
+  this.oldoldX = Math.round(width);
+  this.oldoldY = Math.round(width);
   this.oldX = Math.round(width);
   this.oldY = Math.round(width);
   this.curX = Math.round(width);
@@ -41,6 +43,10 @@ function WaveBox(width,dt) {
 
   this.nearOldCursor = function(i,j) {
     return  Math.pow(this.pxSz()*i-this.oldY,2)+Math.pow(this.pxSz()*j-this.oldX,2) < 20;
+  }
+
+  this.nearOldOldCursor = function(i,j) {
+    return  Math.pow(this.pxSz()*i-this.oldoldY,2)+Math.pow(this.pxSz()*j-this.oldoldX,2) < 20;
   }
   
 
@@ -84,6 +90,13 @@ function WaveBox(width,dt) {
           BMat.push(value);
           BMat2.push(0.0);
           this.image[this.idx(i,j)] = value;
+        } else if ( this.nearCursor(i,j) ) {
+          var value = 0.5 - 0.01*Math.sin(2*Math.PI*this.c/50);
+          Mat.push(value);
+          Mat2.push(0.0);
+          BMat.push(value);
+          BMat2.push(0.0);
+          this.image[this.idx(i,j)] = value;
         } else if ( this.nearOldCursor(i,j) ) {
           var value = 0.5;
           Mat.push(value);
@@ -91,8 +104,8 @@ function WaveBox(width,dt) {
           BMat.push(value);
           BMat2.push(0.0);
           this.image[this.idx(i,j)] = value;
-        } else if ( this.nearCursor(i,j) ) {
-          var value = 0.5 - 0.01*Math.sin(2*Math.PI*this.c/50);
+        } else if ( this.nearOldOldCursor(i,j) ) {
+          var value = 0.5;
           Mat.push(value);
           Mat2.push(0.0);
           BMat.push(value);
@@ -114,7 +127,7 @@ function WaveBox(width,dt) {
     for(var k=0; k<5; k++) {
       for(var i=1; i<this.width-1; i++) {
         for(var j=1; j<this.width-1; j++) {
-          if((!this.inBarrier(i,j)) && !this.nearOldCursor(i,j) && (!this.nearCurCursor(i,j))){
+          if((!this.inBarrier(i,j))  && !this.nearCursor(i,j) && !this.nearOldOldCursor(i,j) && !this.nearOldCursor(i,j) && (!this.nearCurCursor(i,j))){
             var idx = this.idx(i,j);
             var idxU = this.idx(i-1,j);
             var idxD = this.idx(i+1,j);
@@ -149,7 +162,7 @@ function WaveBox(width,dt) {
 
         for(var i=0; i<this.width; i++) {
           for(var j=0; j<this.width; j++) {
-            if(this.inBarrier(i,j) || this.nearCursor(i,j) || this.nearOldCursor(i,j) || this.nearCurCursor(i,j)){
+            if(this.inBarrier(i,j) || this.nearCursor(i,j) || this.nearOldOldCursor(i,j) || this.nearOldCursor(i,j) || this.nearCurCursor(i,j)){
               Mat[this.idx(i,j)] = 0;
               BMat[this.idx(i,j)] = 0;
             }
@@ -160,7 +173,7 @@ function WaveBox(width,dt) {
 
       for(var i=1; i<this.width-1; i++) {
         for(var j=1; j<this.width-1; j++) {
-          if(!this.inBarrier(i,j) && !this.nearCursor(i,j) && !this.nearOldCursor(i,j) && !this.nearCurCursor(i,j)){
+          if(!this.inBarrier(i,j) && !this.nearCursor(i,j) && !this.nearOldOldCursor(i,j) && !this.nearOldCursor(i,j) && !this.nearCurCursor(i,j)){
             var idx = this.idx(i,j);
             var idxU = this.idx(i-1,j);
             var idxD = this.idx(i+1,j);
@@ -176,6 +189,8 @@ function WaveBox(width,dt) {
     }
 
     if(this.c % 50 === 0) {
+      this.oldoldX = this.oldX;
+      this.oldoldY = this.oldY;
       this.oldX = this.curX;
       this.oldY = this.curY;
       this.curX = this.cursorX;
